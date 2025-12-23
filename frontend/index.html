@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MediQuery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+        }
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>MediQuery – Disease Search</h1>
+
+    <input type="text" id="symptoms" placeholder="Enter your symptoms" size="50">
+    <br><br>
+    <button onclick="searchDisease()">Search</button>
+
+    <div id="result"></div>
+
+    <script>
+        async function searchDisease() {
+            const symptoms = document.getElementById("symptoms").value;
+
+            if (!symptoms) {
+                alert("Please enter symptoms");
+                return;
+            }
+
+            const response = await fetch("http://127.0.0.1:5000/search", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    symptoms: symptoms
+                })
+            });
+
+            const data = await response.json();
+
+            let output = "";
+
+            if (data.disease) {
+                output += `<h2>Possible Disease: ${data.disease}</h2>`;
+                output += `<h3>Recommended Doctors:</h3><ul>`;
+
+                data.doctors.forEach(doc => {
+                    output += `<li>
+                        ${doc.doctor_name} (${doc.specialization}) - 
+                        ${doc.hospital_name}
+                    </li>`;
+                });
+
+                output += `</ul>`;
+            } else {
+                output = "<p>No disease found.</p>";
+            }
+
+            document.getElementById("result").innerHTML = output;
+        }
+    </script>
+
+</body>
+</html>
