@@ -14,27 +14,6 @@
 
 </div>
 
----
-
-## 📋 Table of Contents
-
-- [Overview](#-overview)
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
-- [System Architecture](#-system-architecture)
-- [Installation](#-installation)
-- [Configuration](#-configuration)
-- [Database Setup](#-database-setup)
-- [Running the Application](#-running-the-application)
-- [API Reference](#-api-reference)
-- [Project Structure](#-project-structure)
-- [Screenshots](#-screenshots)
-- [Troubleshooting](#-troubleshooting)
-- [Contributing](#-contributing)
-- [License](#-license)
-
----
-
 ## 🎯 Overview
 
 **MediQuery** is a comprehensive medical consultation platform that leverages natural language processing (NLP) and machine learning to help patients find the most suitable doctors based on their symptoms. The system provides:
@@ -120,35 +99,6 @@
 - **JSON** - Data interchange format
 
 ---
-
-## 🏗 System Architecture
-
-```
-┌─────────────────┐
-│   Frontend      │
-│  (HTML/CSS/JS)  │
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│   Flask API     │
-│   (app.py)      │
-└────────┬────────┘
-         │
-    ┌────┴────┐
-    ▼         ▼
-┌────────┐ ┌──────────┐
-│ MySQL  │ │ MongoDB  │
-│  DB    │ │   DB     │
-└────────┘ └──────────┘
-    │          │
-    └──────┬───┘
-           ▼
-    ┌─────────────┐
-    │  NLP Engine │
-    │  OCR Engine │
-    └─────────────┘
-```
 
 ---
 
@@ -745,28 +695,6 @@ mediquery/
 └── README.md                               # This file
 ```
 
----
-
-## 📸 Screenshots
-
-### 1. **Symptom Search Interface**
-
-![Search Interface](screenshots/search.png)
-
-### 2. **Doctor Results with Map**
-
-![Doctor Results](screenshots/results.png)
-
-### 3. **Prescription Upload & OCR**
-
-![Prescription OCR](screenshots/prescription.png)
-
-### 4. **Medical Timeline**
-
-![Timeline](screenshots/timeline.png)
-
----
-
 ## 🐛 Troubleshooting
 
 ### Common Issues and Solutions
@@ -913,45 +841,6 @@ mediquery/
 3. Check browser console for specific error messages
 4. Ensure billing is enabled on Google Cloud (free tier available)
 
----
-
-## 🤝 Contributing
-
-We welcome contributions! Here's how you can help:
-
-### Reporting Bugs
-
-1. Check if the issue already exists
-2. Create a new issue with:
-   - Clear title and description
-   - Steps to reproduce
-   - Expected vs actual behavior
-   - Screenshots if applicable
-   - Your environment (OS, Python version, etc.)
-
-### Suggesting Features
-
-1. Open an issue with `[FEATURE REQUEST]` prefix
-2. Describe the feature and its benefits
-3. Provide examples or mockups if possible
-
-### Pull Requests
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Commit changes: `git commit -m 'Add amazing feature'`
-4. Push to branch: `git push origin feature/amazing-feature`
-5. Open a Pull Request
-
-### Code Style
-
-- Follow PEP 8 for Python code
-- Use meaningful variable names
-- Add comments for complex logic
-- Update documentation for new features
-
----
-
 ## 📊 Database Schema
 
 ### MySQL Tables
@@ -1051,16 +940,6 @@ duration_minutes, is_booked, patient_id
 3. **GridFS Storage**: Secure file storage for prescriptions
 4. **Input Sanitization**: SQL injection prevention via parameterized queries
 
-### Recommendations for Production
-
-1. **Add Authentication**: Implement JWT or OAuth2 for user sessions
-2. **HTTPS Only**: Use SSL/TLS certificates
-3. **Rate Limiting**: Prevent API abuse
-4. **Input Validation**: Enhanced server-side validation
-5. **Encryption**: Encrypt sensitive patient data at rest
-6. **Audit Logs**: Track all data access and modifications
-7. **HIPAA Compliance**: Implement full healthcare data compliance measures
-
 ---
 
 ## 🚀 Future Enhancements
@@ -1078,39 +957,7 @@ duration_minutes, is_booked, patient_id
 
 ---
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 👥 Authors
-
-- **Your Name** - _Initial work_ - [GitHub](https://github.com/yourusername)
-
----
-
-## 🙏 Acknowledgments
-
-- Tesseract OCR by Google
-- Flask framework by Pallets
-- MongoDB for flexible data storage
-- Google Maps Platform
-- All contributors and testers
-
----
-
-## 📞 Support
-
-For support, email: support@mediquery.com (update with your email)
-
-Or open an issue on [GitHub Issues](https://github.com/yourusername/mediquery/issues)
-
----
-
 <div align="center">
-
-**Made with ❤️ for better healthcare accessibility**
 
 [⬆ Back to Top](#-mediquery---smart-medical-consultation-system)
 
