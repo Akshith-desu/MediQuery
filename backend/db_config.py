@@ -7,3 +7,4 @@ def get_mysql_connection():
         password=" ",#enter the password
         database="mediquery"
     )
+ 

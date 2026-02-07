@@ -2,73 +2,118 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>MediQuery</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-        }
-        input, button {
-            padding: 10px;
-            font-size: 16px;
-        }
-        #result {
-            margin-top: 20px;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediQuery - Smart Medical Consultation</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo-section">
+                <h1>🏥 MediQuery</h1>
+                <p>Smart Medical Consultation System</p>
+            </div>
+            
+            <nav class="nav-buttons">
+                <button onclick="getMyLocation()" class="nav-btn secondary">
+                    <span class="btn-icon"></span>
+                    <span>Use My Location</span>
+                </button>
+                
+                <button onclick="viewMyAppointments()" class="nav-btn secondary">
+                    <span class="btn-icon"></span>
+                    <span>My Appointments</span>
+                </button>
+                
+                <button onclick="uploadPrescription()" class="nav-btn secondary">
+                    <span class="btn-icon"></span>
+                    <span>Upload Prescription</span>
+                </button>
+                
+                <button onclick="viewMyPrescriptions()" class="nav-btn secondary">
+                    <span class="btn-icon"></span>
+                    <span>My Prescriptions</span>
+                </button>
+                
+                <button onclick="viewMedicalTimeline()" class="nav-btn secondary">
+                    <span class="btn-icon"></span>
+                    <span>Medical Timeline</span>
+                </button>
 
-    <h1>MediQuery – Disease Search</h1>
+                <button onclick="viewSharedPrescription()" class="nav-btn secondary" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                    <span class="btn-icon"></span>
+                    <span>View Shared Records</span>
+                </button>
+                
+            </nav>
+        </aside>
 
-    <input type="text" id="symptoms" placeholder="Enter your symptoms" size="50">
-    <br><br>
-    <button onclick="searchDisease()">Search</button>
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="content-card">
+                <div class="search-section">
+                    <h2>Find the Right Doctor Near You</h2>
+                    <div class="search-box">
+                        <input type="text" id="symptoms" 
+                            placeholder="Describe your symptoms (e.g., severe headache, nausea, fever)">
+                        <button onclick="searchDoctors()" class="search-btn">
+                            <span>🔍</span>
+                            <span>Search Doctors</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="distance-slider">
+                    <label>
+                        <span>Search Radius</span>
+                        <span class="distance-value" id="distanceValue">10 km</span>
+                    </label>
+                    <input type="range" id="distanceRange" min="5" max="50" value="10" step="5"
+                           oninput="updateDistance(this.value)">
+                </div>
+                
+                <div id="map"></div>
+            </div>
+            
+            <div id="results"></div>
+        </main>
+    </div>
 
-    <div id="result"></div>
+    <!-- Appointments Modal -->
+    <div id="appointmentsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📅 My Appointments</h2>
+                <button onclick="closeAppointments()" class="close-btn">✕</button>
+            </div>
+            <div id="appointmentsList" class="modal-body"></div>
+        </div>
+    </div>
 
-    <script>
-        async function searchDisease() {
-            const symptoms = document.getElementById("symptoms").value;
+    <!-- Prescriptions Modal -->
+    <div id="prescriptionsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>My Prescriptions</h2>
+                <button onclick="closePrescriptions()" class="close-btn">✕</button>
+            </div>
+            <div id="prescriptionsList" class="modal-body"></div>
+        </div>
+    </div>
 
-            if (!symptoms) {
-                alert("Please enter symptoms");
-                return;
-            }
+    <!-- Medical Timeline Modal -->
+    <div id="timelineModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📊 Medical History Timeline</h2>
+                <button onclick="closeTimeline()" class="close-btn">✕</button>
+            </div>
+            <div id="timelineList" class="modal-body"></div>
+        </div>
+    </div>
 
-            const response = await fetch("http://127.0.0.1:5000/search", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    symptoms: symptoms
-                })
-            });
-
-            const data = await response.json();
-
-            let output = "";
-
-            if (data.disease) {
-                output += `<h2>Possible Disease: ${data.disease}</h2>`;
-                output += `<h3>Recommended Doctors:</h3><ul>`;
-
-                data.doctors.forEach(doc => {
-                    output += `<li>
-                        ${doc.doctor_name} (${doc.specialization}) - 
-                        ${doc.hospital_name}
-                    </li>`;
-                });
-
-                output += `</ul>`;
-            } else {
-                output = "<p>No disease found.</p>";
-            }
-
-            document.getElementById("result").innerHTML = output;
-        }
-    </script>
-
+    <script src="script.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
 </body>
 </html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Database Schema</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 40px;
+            background: white;
+            font-family: Arial, sans-serif;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        h2 {
+            font-size: 18px;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+        
+        .table-container {
+            position: absolute;
+        }
+        
+        .table-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .table-box {
+            display: inline-flex;
+            border: 2px solid #000;
+            background: white;
+        }
+        
+        .field {
+            padding: 10px 15px;
+            border-right: 2px solid #000;
+            font-size: 13px;
+            white-space: nowrap;
+            text-align: center;
+        }
+        
+        .field:last-child {
+            border-right: none;
+        }
+        
+        .field.pk {
+            text-decoration: underline;
+            font-weight: bold;
+        }
+        
+        .field.fk {
+            font-weight: bold;
+        }
+        
+        .schema-canvas {
+            position: relative;
+            width: 100%;
+            height: 1000px;
+        }
+        
+        svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .table-container {
+            position: absolute;
+            z-index: 2;
+        }
+        
+        .arrow-line {
+            fill: none;
+            stroke: #000;
+            stroke-width: 2;
+        }
+        
+        .arrow-head {
+            fill: #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>3.1.1 Schema Representation</h2>
+        
+        <div class="schema-canvas">
+            <svg width="100%" height="1000">
+                <!-- Hospital to Doctor -->
+                <line x1="700" y1="75" x2="700" y2="150" class="arrow-line"/>
+                <polygon points="700,150 695,140 705,140" class="arrow-head"/>
+                
+                <!-- Doctor to Appointment_Slots (doctor_id FK) -->
+                <line x1="520" y1="200" x2="520" y2="340" class="arrow-line"/>
+                <polygon points="520,340 515,330 525,330" class="arrow-head"/>
+                
+                <!-- Patient to Appointment_Slots (patient_id FK) -->
+                <line x1="1100" y1="200" x2="1100" y2="280" class="arrow-line"/>
+                <line x1="1100" y1="280" x2="880" y2="280" class="arrow-line"/>
+                <line x1="880" y1="280" x2="880" y2="340" class="arrow-line"/>
+                <polygon points="880,340 875,330 885,330" class="arrow-head"/>
+                
+                <!-- Doctor to Consultation_Fees -->
+                <line x1="700" y1="200" x2="700" y2="520" class="arrow-line"/>
+                <polygon points="700,520 695,510 705,510" class="arrow-head"/>
+                
+                <!-- Doctor to Doctor_Disease_Expertise -->
+                <line x1="520" y1="200" x2="520" y2="460" class="arrow-line"/>
+                <line x1="520" y1="460" x2="420" y2="460" class="arrow-line"/>
+                <line x1="420" y1="460" x2="420" y2="700" class="arrow-line"/>
+                <polygon points="420,700 415,690 425,690" class="arrow-head"/>
+                
+                <!-- Disease to Doctor_Disease_Expertise -->
+                <line x1="150" y1="585" x2="150" y2="650" class="arrow-line"/>
+                <line x1="150" y1="650" x2="280" y2="650" class="arrow-line"/>
+                <line x1="280" y1="650" x2="280" y2="700" class="arrow-line"/>
+                <polygon points="280,700 275,690 285,690" class="arrow-head"/>
+            </svg>
+            
+            <!-- Hospital Table -->
+            <div class="table-container" style="top: 0; left: 280px;">
+                <div class="table-label">Hospital Table:</div>
+                <div class="table-box">
+                    <div class="field pk">hospital_id</div>
+                    <div class="field">name</div>
+                    <div class="field">location</div>
+                    <div class="field">latitude</div>
+                    <div class="field">longitude</div>
+                    <div class="field">contact_no</div>
+                    <div class="field">rating</div>
+                    <div class="field">total_reviews</div>
+                    <div class="field">facilities</div>
+                    <div class="field">operational_hours</div>
+                </div>
+            </div>
+            
+            <!-- Doctor Table -->
+            <div class="table-container" style="top: 150px; left: 420px;">
+                <div class="table-label">Doctor Table:</div>
+                <div class="table-box">
+                    <div class="field pk">doctor_id</div>
+                    <div class="field">name</div>
+                    <div class="field">specialization</div>
+                    <div class="field fk">hospital_id</div>
+                    <div class="field">contact_no</div>
+                </div>
+            </div>
+            
+            <!-- Patient Table -->
+            <div class="table-container" style="top: 150px; left: 1020px;">
+                <div class="table-label">Patient Table:</div>
+                <div class="table-box">
+                    <div class="field pk">patient_id</div>
+                    <div class="field">name</div>
+                </div>
+            </div>
+            
+            <!-- Appointment_Slots Table -->
+            <div class="table-container" style="top: 340px; left: 280px;">
+                <div class="table-label">Appointment_Slots Table:</div>
+                <div class="table-box">
+                    <div class="field pk">slot_id</div>
+                    <div class="field fk">doctor_id</div>
+                    <div class="field">slot_date</div>
+                    <div class="field">slot_time</div>
+                    <div class="field">duration_minutes</div>
+                    <div class="field">is_booked</div>
+                    <div class="field fk">patient_id</div>
+                </div>
+            </div>
+            
+            <!-- Consultation_Fees Table -->
+            <div class="table-container" style="top: 520px; left: 480px;">
+                <div class="table-label">Consultation_Fees Table:</div>
+                <div class="table-box">
+                    <div class="field pk">fee_id</div>
+                    <div class="field fk">doctor_id</div>
+                    <div class="field">consultation_type</div>
+                    <div class="field">base_fee</div>
+                    <div class="field">insurance_accepted</div>
+                </div>
+            </div>
+            
+            <!-- Disease Table -->
+            <div class="table-container" style="top: 520px; left: 50px;">
+                <div class="table-label">Disease Table:</div>
+                <div class="table-box">
+                    <div class="field pk">disease_id</div>
+                    <div class="field">name</div>
+                </div>
+            </div>
+            
+            <!-- Doctor_Disease_Expertise Table -->
+            <div class="table-container" style="top: 700px; left: 120px;">
+                <div class="table-label">Doctor_Disease_Expertise Table:</div>
+                <div class="table-box">
+                    <div class="field pk">expertise_id</div>
+                    <div class="field fk">doctor_id</div>
+                    <div class="field fk">disease_id</div>
+                    <div class="field">experience_years</div>
+                    <div class="field">success_rate</div>
+                    <div class="field">total_cases</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
